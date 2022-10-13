@@ -50,7 +50,7 @@ public class Main {
                 2. Ta bort en produkt
                 3. Visa alla produkter
                 4. Meny
-                5. Spara
+                5. Spara varor till fil
                 e. Avsluta""");
 
         Scanner scanner = new Scanner(System.in);
@@ -285,8 +285,6 @@ public class Main {
             throw new RuntimeException(e);
         }
     }
-
-
 
 
 

@@ -5,9 +5,9 @@ public class Arrayproduct {
     String kategori;
     String produkt;
     double pris;
-    double ean;
+    int ean;
 
-    public Arrayproduct(String kategori, String produkt, double pris, double ean) {
+    public Arrayproduct(String kategori, String produkt, double pris, int ean) {
         this.kategori = kategori;
         this.produkt = produkt;
         this.pris = pris;
@@ -42,7 +42,7 @@ public class Arrayproduct {
         return ean;
     }
 
-    public void setEan(double ean) {
+    public void setEan(int ean) {
         this.ean = ean;
     }
 
