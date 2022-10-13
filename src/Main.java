@@ -1,19 +1,9 @@
-
-
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
-import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
@@ -33,6 +23,7 @@ public class Main {
                 1. Hantera varor
                 2. Hantera priser
                 3. Sök
+                4. Läs in varor ifrån fil
                 e. Avsluta""");
         while (true) {
             Scanner scanner = new Scanner(System.in);
@@ -41,6 +32,7 @@ public class Main {
                 case "1" -> hanteraVarorMeny();
                 case "2" -> hanteraPrisMeny();
                 case "3" -> hanteraSökMeny();
+                case "4" -> reader();
                 case "e" -> System.exit(0);
 
             }
@@ -59,19 +51,17 @@ public class Main {
                 3. Visa alla produkter
                 4. Meny
                 5. Spara
-                6.Läs in varor.
                 e. Avsluta""");
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
             switch (input) {
-                case "1" -> printaddproduct();
-                case "2" -> printRemoveAproduct();
+                case "1" -> addNewProduct();
+                case "2" -> removeProduct();
                 case "3" -> distinctSaldo();
                 case "4" -> MenyValSorted();
                 case "5" -> gson();
-                case "6" -> reader();
                 case "e" -> System.exit(0);
 
             }
@@ -128,7 +118,7 @@ public class Main {
     }
 
 
-    private static void printaddproduct() {
+    private static void addNewProduct() {
         Arrayproduct nyprodukter = nyvara();
         addproduct(nyprodukter);
         hanteraVarorMeny();
@@ -136,7 +126,7 @@ public class Main {
         //MenyVal();
     }
 
-    private static void printRemoveAproduct() {
+    private static void removeProduct() {
         try {
             printarraylist();
             Scanner scans = new Scanner(System.in);
@@ -169,7 +159,7 @@ public class Main {
     private static void distinctSaldo() {
         System.out.println("Du har " + arrayProductList.size() + " produkter");
         for (Object number : arrayProductList.stream().distinct().toList())
-            System.out.println(number + " Du har " + Collections.frequency(arrayProductList, number) + "st i Saldo");
+            System.out.println(number + "Saldo: " + Collections.frequency(arrayProductList, number));
 
 
 
@@ -180,9 +170,11 @@ public class Main {
         try {
             System.out.println("Skriv in prisintervall");
             Scanner input = new Scanner(System.in);
+            System.out.print("Skriv in lägsta belopp: ");
             int inputLow = input.nextInt();
+            System.out.print("Skriv in högsta belopp: ");
             int inputHigh = input.nextInt();
-            arrayProductList.stream().filter(p -> p.getPris() > inputLow && p.getPris() < inputHigh).
+            arrayProductList.stream().filter(p -> p.getPris() >= inputLow && p.getPris() <= inputHigh).
                     forEach(System.out::println);
 
 
@@ -217,8 +209,9 @@ public class Main {
 
 
     private static void sortByPrice() {
-        arrayProductList.sort(Comparator.comparingInt(o -> o.pris));
+        arrayProductList.sort(Comparator.comparingDouble(o -> o.pris));
         printarraylist();
+        arrayProductList.sort(Comparator.comparing(o -> o.kategori));
 
     }
 
@@ -256,7 +249,7 @@ public class Main {
 
 
     private static void gson(){
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(arrayProductList);
         String homeFolder = System.getProperty("user.home");
 
@@ -272,7 +265,8 @@ public class Main {
     public static void reader(){
   Gson gson = new Gson();
   Path filePath = Path.of(("C:\\Users\\linds\\JSONprodukt.json"));
-        readFileAsStream(filePath);
+        System.out.println("Dina varor har lästs in.");
+     //   readFileAsStream(filePath);
 
 
   try{ String fileContent = Files.readString(filePath);

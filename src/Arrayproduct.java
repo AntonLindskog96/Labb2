@@ -4,10 +4,10 @@ public class Arrayproduct {
 
     String kategori;
     String produkt;
-    int pris;
-    int ean;
+    double pris;
+    double ean;
 
-    public Arrayproduct(String kategori, String produkt, int pris, int ean) {
+    public Arrayproduct(String kategori, String produkt, double pris, double ean) {
         this.kategori = kategori;
         this.produkt = produkt;
         this.pris = pris;
@@ -30,19 +30,19 @@ public class Arrayproduct {
         this.produkt = produkt;
     }
 
-    public int getPris() {
+    public double getPris() {
         return pris;
     }
 
-    public void setPris(int pris) {
+    public void setPris(double pris) {
         this.pris = pris;
     }
 
-    public int getEan() {
+    public double getEan() {
         return ean;
     }
 
-    public void setEan(int ean) {
+    public void setEan(double ean) {
         this.ean = ean;
     }
 
@@ -50,8 +50,8 @@ public class Arrayproduct {
     public String toString() {
         return
                 kategori +":" +
-                " produkt:" + produkt +" " +
-                "pris:" + pris +
+                " Produkt:" + produkt +" " +
+                "Pris:" + pris +
                 ":- QR" + ean + " ---" ;
     }
 
