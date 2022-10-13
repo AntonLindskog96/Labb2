@@ -52,7 +52,7 @@ public class Arrayproduct {
                 kategori +":" +
                 " Produkt:" + produkt +" " +
                 "Pris:" + pris +
-                ":- QR" + ean + " ---" ;
+                ":- QR:" + ean + " ---" ;
     }
 
     @Override
