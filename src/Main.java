@@ -11,12 +11,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        MenyValSorted();
+        startMenu();
 
 
     }
 
-    private static void MenyValSorted() {
+    private static void startMenu() {
         System.out.println("""
                 MENY
                 ========
@@ -29,9 +29,9 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
             switch (input) {
-                case "1" -> hanteraVarorMeny();
-                case "2" -> hanteraPrisMeny();
-                case "3" -> hanteraSökMeny();
+                case "1" -> productMenu();
+                case "2" -> priceMenu();
+                case "3" -> searchMenu();
                 case "4" -> reader();
                 case "e" -> System.exit(0);
 
@@ -42,7 +42,7 @@ public class Main {
     }
 
 
-    private static void hanteraVarorMeny() {
+    private static void productMenu() {
         System.out.println("""
                 Välj ett alternativ
                 ========
@@ -59,8 +59,8 @@ public class Main {
             switch (input) {
                 case "1" -> addNewProduct();
                 case "2" -> removeProduct();
-                case "3" -> distinctSaldo();
-                case "4" -> MenyValSorted();
+                case "3" -> distinctBalance();
+                case "4" -> startMenu();
                 case "5" -> gson();
                 case "e" -> System.exit(0);
 
@@ -71,7 +71,7 @@ public class Main {
 
     }
 
-    private static void hanteraPrisMeny() {
+    private static void priceMenu() {
         System.out.println("""
                 Välj ett alternativ
                 ========
@@ -85,8 +85,8 @@ public class Main {
             String input = scanner.nextLine();
             switch (input) {
                 case "1" -> sortByPrice();
-                case "2" -> priceIntervall();
-                case "3" -> MenyValSorted();
+                case "2" -> priceInterval();
+                case "3" -> startMenu();
                 case "e" -> System.exit(0);
 
             }
@@ -94,7 +94,7 @@ public class Main {
 
     }
 
-    private static void hanteraSökMeny() {
+    private static void searchMenu() {
         System.out.println("""
                 Välj ett alternativ
                 ========
@@ -107,8 +107,8 @@ public class Main {
             String input = scanner.nextLine();
             switch (input) {
                 case "1" -> searchProduct();
-                case "2" -> searchKategori();
-                case "3" -> MenyValSorted();
+                case "2" -> searchCategory();
+                case "3" -> startMenu();
                 case "e" -> System.exit(0);
 
 
@@ -119,9 +119,9 @@ public class Main {
 
 
     private static void addNewProduct() {
-        Arrayproduct nyprodukter = nyvara();
+        Arrayproduct nyprodukter = newProduct();
         addproduct(nyprodukter);
-        hanteraVarorMeny();
+        productMenu();
 
         //MenyVal();
     }
@@ -133,10 +133,10 @@ public class Main {
             System.out.print("Skriv numret på varan du vill ta bort: \n ");
             arrayProductList.remove(scans.nextInt());
             System.out.println("En vara har tagits bort");
-            hanteraVarorMeny();
+            productMenu();
         } catch (Exception e) {
             System.out.println("Något gick vajsing, försök igen");
-            hanteraVarorMeny();
+            productMenu();
         }
     }
 
@@ -156,7 +156,7 @@ public class Main {
         }
     }
 
-    private static void distinctSaldo() {
+    private static void distinctBalance() {
         System.out.println("Du har " + arrayProductList.size() + " produkter");
         for (Object number : arrayProductList.stream().distinct().toList())
             System.out.println(number + "Saldo: " + Collections.frequency(arrayProductList, number));
@@ -166,7 +166,7 @@ public class Main {
     }
 
 
-    private static void priceIntervall() {
+    private static void priceInterval() {
         try {
             System.out.println("Skriv in prisintervall");
             Scanner input = new Scanner(System.in);
@@ -180,16 +180,16 @@ public class Main {
 
         } catch (Exception e) {
             System.out.println("Du har inga varor");
-            hanteraPrisMeny();
+            priceMenu();
         }
     }
 
-    private static void addproduct(Arrayproduct arrayprodukt) {
-        arrayProductList.add(arrayprodukt);
+    private static void addproduct(Arrayproduct arrayproduct) {
+        arrayProductList.add(arrayproduct);
 
     }
 
-    private static Arrayproduct nyvara() {
+    private static Arrayproduct newProduct() {
         try {
             Scanner scan = new Scanner(System.in);
             System.out.println("Vad skall det vara för kategori?");
@@ -231,7 +231,7 @@ public class Main {
         }
     }
 
-    private static void searchKategori() {
+    private static void searchCategory() {
         System.out.println("Skriv in en kategori du vill söka efter: ");
         Scanner sc = new Scanner(System.in);
         String name = sc.nextLine();
@@ -255,7 +255,8 @@ public class Main {
 
         try {
             Files.writeString(Path.of(homeFolder, "JSONprodukt.json"), json);
-            System.out.println("Du har sparat.");
+            System.out.println("Du har sparat filer.");
+            startMenu();
         }catch(IOException e){
 
             throw new RuntimeException(e);
